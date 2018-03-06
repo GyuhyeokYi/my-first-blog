@@ -19,3 +19,11 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+class UploadFile(models.Model):
+    title = models.CharField(max_length=200)
+    file = models.FileField(null=True)
+    upload_date = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.title
+
