@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import pymysql
+from os import environ
+
+
+pymysql.install_as_MySQLdb()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -74,11 +79,28 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DATABASES = {
-    'default': {
+DATABASES_LIST = {
+    'local': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+
+    'mysql': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'blog', # DB명
+        'USER': 'gyuh', # 데이터베이스 계정
+        'PASSWORD': 'xfile', # 계정 비밀번호
+        'HOST': '61.252.137.64', # 데이테베이스 주소(IP)
+        'PORT': '3306', # 데이터베이스 포트(보통은 3306)
     }
+}
+
+default_database = environ.get('DJANGO_DATABASE', 'main')
+print("{} 데이터베이스 활성화됨".format(default_database))
+# DATABASES['default'] = DATABASES[default_database]
+
+DATABASES = {
+    'default' : DATABASES_LIST[default_database]
 }
 
 
