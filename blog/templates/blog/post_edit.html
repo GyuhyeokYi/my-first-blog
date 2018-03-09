@@ -4,7 +4,23 @@
 	<h1>New {{ form.name }}</h1>
 	<form method="POST" class="post-form" enctype="multipart/form-data" novalidate>
 		{% csrf_token %}
-		{{ form.as_p }}
-		<button type="submit" class="save btn btn-default">Save</button>
+		{{ form.as_p}}
+		
+		<!--
+		<div class="container">
+            <div class="row">
+                <div class="col-md-2">
+                	제목:
+                </div>
+                <div class="col-md-10">
+                	<input name="title" class="form-control"/>
+                </div>
+            </div>
+            <div class="row">
+            	
+            </div>
+        </div>
+    	-->
+    	<button type="submit" class="save btn btn-info btn-md">Save</button>
 	</form>
 {% endblock%}

@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.utils import timezone
-from .models import Post
-from django.shortcuts import render, get_object_or_404
-from .forms import PostForm
-from django.shortcuts import redirect
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.models import User
+from django.contrib.auth import login, authenticate
+from django.template import RequestContext
+from django.http import HttpResponse
 
-from .models import UploadFile
-from .forms import UploadFileForm
+from .models import Post, UploadFile
+from .forms import PostForm, UploadFileForm, UserForm, LoginForm
 
 # Create your views here.
 
@@ -66,6 +67,33 @@ def post_edit(request, pk):
 	else:
 		form = PostForm(instance=post)
 	return render(request, 'blog/post_edit.html', {'form': form})
+
+def signup(request):
+	if request.method == "POST":
+		form = UserForm(request.POST)
+		if form.is_valid():
+			new_user = User.objects.create_user(**form.cleaned_data)
+			login(request, new_user)
+			return redirect('post_list')
+	else:
+		form = UserForm()
+		return render(request, 'blog/add_user.html', {'form': form})
+
+def signin(request):
+	if request.method == "POST":			
+		form = LoginForm(request.POST)
+		username = request.POST['username']
+		password = request.POST['password']
+		user = authenticate(username = username, password = password)
+		if user is not None:
+			login(request, user)
+			return redirect('post_list')
+		else:
+			print('로그인 실패, 다시 시도해보세요.')
+			return HttpResponse('로그인 실패, 다시 시도해보세요.')
+	else:
+		form = LoginForm()
+		return render(request, 'blog/login.html', {'form': form})
 
 
 

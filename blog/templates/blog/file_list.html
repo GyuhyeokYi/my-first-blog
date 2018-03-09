@@ -26,9 +26,13 @@
 		<tbody>
 			{% for post in posts %}
 			<tr>
-				<td>{{ post.upload_date }}</td>
-				<td>{{ post.title}}</td>
-				<td>{{ post.file.name}}</td>
+				<td>
+          <!-- {{ post.upload_date.year }}년 {{post.upload_date.month}}월 {{post.upload_date.day }}일  -->
+          <!-- {{ post.upload_date.hour }}:{{post.upload_date.minute}}:{{post.upload_date.second }} -->
+          {{ post.upload_date }}
+        </td>
+				<td>{{ post.title }}</td>
+				<td>{{ post.file.name }}</td>
 				<td><a href="{{ post.file.url }}">다운로드</td>
 			</tr>
 			{% endfor %}

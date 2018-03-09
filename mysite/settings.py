@@ -80,6 +80,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES_LIST = {
+
     'local': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
@@ -95,7 +96,7 @@ DATABASES_LIST = {
     }
 }
 
-default_database = environ.get('DJANGO_DATABASE', 'main')
+default_database = environ.get('DJANGO_DATABASE', 'local')
 print("{} 데이터베이스 활성화됨".format(default_database))
 # DATABASES['default'] = DATABASES[default_database]
 
