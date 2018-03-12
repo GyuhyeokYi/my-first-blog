@@ -20,6 +20,7 @@ class Post(models.Model):
         return self.title
 
 class UploadFile(models.Model):
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     file = models.FileField(null=True)
     upload_date = models.DateTimeField(default=timezone.now)
